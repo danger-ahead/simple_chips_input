@@ -39,40 +39,52 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Output:\n$output',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Example:\nChips with standard email validation',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 30, color: Colors.blue),
+              style: TextStyle(fontSize: 20, color: Colors.blue),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SimpleChipsInput(
-                separatorCharacter: ",",
-                validateInput: true,
-                validateInputMethod: (String value) {
-                  final emailRegExp = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                  if (!emailRegExp.hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                },
-                onSubmitted: (p0) {
-                  setState(() {
-                    output = p0;
-                  });
-                },
-                widgetContainerDecoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.blue),
-                ),
+          ),
+          Text(
+            'Output:\n$output',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 16, color: Colors.blue),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SimpleChipsInput(
+              separatorCharacter: ",",
+              validateInput: true,
+              validateInputMethod: (String value) {
+                final emailRegExp = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                if (!emailRegExp.hasMatch(value)) {
+                  return 'Please enter a valid email';
+                }
+              },
+              onSubmitted: (p0) {
+                setState(() {
+                  output = p0;
+                });
+              },
+              widgetContainerDecoration: BoxDecoration(
+                color: Colors.blueAccent.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(16.0),
+                border: Border.all(color: Colors.blue),
               ),
+              chipContainerDecoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              placeChipsSectionAbove: false,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
