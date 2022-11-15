@@ -1,6 +1,12 @@
+## 0.2.1
+
+- Added support for TextFormField style
+
+
 ## 0.2.0
 
 - Added onSaved callback
+
 
 ## 0.1.0
 

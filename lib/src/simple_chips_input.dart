@@ -18,6 +18,7 @@ class SimpleChipsInput extends StatefulWidget {
       color: Colors.blue,
       borderRadius: BorderRadius.all(Radius.circular(50.0)),
     ),
+    this.textFormFieldStyle = const TextFormFieldStyle(),
     this.chipTextStyle = const TextStyle(color: Colors.white),
     this.deleteIconPadding = const EdgeInsets.only(left: 5.0),
     this.autoFocus = false,
@@ -97,6 +98,9 @@ class SimpleChipsInput extends StatefulWidget {
   /// Form key to access or validate the form outside the widget.
   final GlobalKey<FormState>? formKey;
 
+  /// Style for the textfield.
+  final TextFormFieldStyle textFormFieldStyle;
+
   final void Function(String)? onChanged;
   final void Function()? onEditingComplete;
   final void Function(String)? onSubmitted;
@@ -111,7 +115,6 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
   // ignore: prefer_typing_uninitialized_variables
   late final _formKey;
   final List<String> _chipsText = [];
-  late final TextFormFieldStyle _textFormFieldStyle;
 
   String _output = '';
 
@@ -120,7 +123,6 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     _formKey = widget.formKey ?? GlobalKey<FormState>();
-    _textFormFieldStyle = const TextFormFieldStyle();
   }
 
   List<Widget> _buildChipsSection() {
@@ -188,15 +190,15 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                 child: TextFormField(
                   autofocus: widget.autoFocus,
                   controller: _controller,
-                  keyboardType: _textFormFieldStyle.keyboardType,
-                  maxLines: _textFormFieldStyle.maxLines,
-                  minLines: _textFormFieldStyle.minLines,
-                  enableSuggestions: _textFormFieldStyle.enableSuggestions,
-                  showCursor: _textFormFieldStyle.showCursor,
-                  cursorWidth: _textFormFieldStyle.cursorWidth,
-                  cursorColor: _textFormFieldStyle.cursorColor,
-                  cursorRadius: _textFormFieldStyle.cursorRadius,
-                  cursorHeight: _textFormFieldStyle.cursorHeight,
+                  keyboardType: widget.textFormFieldStyle.keyboardType,
+                  maxLines: widget.textFormFieldStyle.maxLines,
+                  minLines: widget.textFormFieldStyle.minLines,
+                  enableSuggestions: widget.textFormFieldStyle.enableSuggestions,
+                  showCursor: widget.textFormFieldStyle.showCursor,
+                  cursorWidth: widget.textFormFieldStyle.cursorWidth,
+                  cursorColor: widget.textFormFieldStyle.cursorColor,
+                  cursorRadius: widget.textFormFieldStyle.cursorRadius,
+                  cursorHeight: widget.textFormFieldStyle.cursorHeight,
                   onChanged: (value) {
                     if (value.endsWith(widget.createCharacter)) {
                       _controller.text = _controller.text
@@ -213,7 +215,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                       widget.onChanged?.call(value);
                     }
                   },
-                  decoration: _textFormFieldStyle.decoration,
+                  decoration: widget.textFormFieldStyle.decoration,
                   validator: (value) {
                     if (widget.validateInput &&
                         widget.validateInputMethod != null) {
