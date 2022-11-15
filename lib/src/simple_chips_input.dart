@@ -135,9 +135,11 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              _chipsText[i],
-              style: widget.chipTextStyle,
+            Flexible(
+              child: Text(
+                _chipsText[i],
+                style: widget.chipTextStyle,
+              ),
             ),
             if (widget.deleteChip)
               Padding(

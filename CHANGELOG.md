@@ -1,17 +1,22 @@
+## 0.2.3
+
+- Fixed long chips overflowing problem.
+
+
 ## 0.2.2
 
-- Fixed onChanged callback calling
+- Fixed onChanged callback calling.
 
 
 
 ## 0.2.1
 
-- Added support for TextFormField style
+- Added support for TextFormField style.
 
 
 ## 0.2.0
 
-- Added onSaved callback
+- Added onSaved callback.
 
 
 ## 0.1.0
