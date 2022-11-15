@@ -32,6 +32,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String output = '';
+  final key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SimpleChipsInput(
               separatorCharacter: ",",
               validateInput: true,
+              formKey: key,
               validateInputMethod: (String value) {
                 final emailRegExp = RegExp(
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -72,6 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   output = p0;
                 });
               },
+              onSaved: ((p0) {
+                setState(() {
+                  output = p0;
+                });
+              }),
               widgetContainerDecoration: BoxDecoration(
                 color: Colors.blueAccent.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(16.0),
@@ -84,6 +92,18 @@ class _MyHomePageState extends State<MyHomePage> {
               placeChipsSectionAbove: false,
             ),
           ),
+          MaterialButton(
+            color: Colors.blue,
+            onPressed: (() {
+              if (key.currentState!.validate()) {
+                key.currentState!.save();
+              }
+            }),
+            child: const Text(
+              'Submit',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
         ],
       ),
     );

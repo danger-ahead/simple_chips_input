@@ -34,6 +34,7 @@ class SimpleChipsInput extends StatefulWidget {
     this.onChanged,
     this.onEditingComplete,
     this.onSubmitted,
+    this.onSaved,
   });
 
   /// Character to seperate the output. For example: ' ' will seperate the output by space.
@@ -99,6 +100,7 @@ class SimpleChipsInput extends StatefulWidget {
   final void Function(String)? onChanged;
   final void Function()? onEditingComplete;
   final void Function(String)? onSubmitted;
+  final void Function(String)? onSaved;
 
   @override
   State<SimpleChipsInput> createState() => _SimpleChipsInputState();
@@ -236,6 +238,21 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                     widget.onSubmitted?.call(_output);
                     _controller.clear();
                   }),
+                  onSaved: (value) {
+                    _output = '';
+                    for (String text in _chipsText) {
+                      _output += text + widget.separatorCharacter;
+                    }
+                    if (value!.isNotEmpty &&
+                        _formKey.currentState!.validate()) {
+                      setState(() {
+                        _chipsText.add(_controller.text);
+                        _output += _controller.text + widget.separatorCharacter;
+                      });
+                    }
+                    widget.onSaved?.call(_output);
+                    _controller.clear();
+                  },
                 ),
               ),
               if (!widget.placeChipsSectionAbove) ...[

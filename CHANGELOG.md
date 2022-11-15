@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Added onSaved callback
+
 ## 0.1.0
 
 - Fixed a bug that caused the package to output wrong String after a chip had been deleted.
