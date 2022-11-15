@@ -193,7 +193,8 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                   keyboardType: widget.textFormFieldStyle.keyboardType,
                   maxLines: widget.textFormFieldStyle.maxLines,
                   minLines: widget.textFormFieldStyle.minLines,
-                  enableSuggestions: widget.textFormFieldStyle.enableSuggestions,
+                  enableSuggestions:
+                      widget.textFormFieldStyle.enableSuggestions,
                   showCursor: widget.textFormFieldStyle.showCursor,
                   cursorWidth: widget.textFormFieldStyle.cursorWidth,
                   cursorColor: widget.textFormFieldStyle.cursorColor,
@@ -212,8 +213,8 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                           _controller.clear();
                         });
                       }
-                      widget.onChanged?.call(value);
                     }
+                    widget.onChanged?.call(value);
                   },
                   decoration: widget.textFormFieldStyle.decoration,
                   validator: (value) {
@@ -231,29 +232,34 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                     for (String text in _chipsText) {
                       _output += text + widget.separatorCharacter;
                     }
-                    if (value.isNotEmpty && _formKey.currentState!.validate()) {
-                      setState(() {
-                        _chipsText.add(_controller.text);
-                        _output += _controller.text + widget.separatorCharacter;
-                      });
+                    if (value.isNotEmpty) {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _chipsText.add(_controller.text);
+                          _output +=
+                              _controller.text + widget.separatorCharacter;
+                          _controller.clear();
+                        });
+                      }
                     }
                     widget.onSubmitted?.call(_output);
-                    _controller.clear();
                   }),
                   onSaved: (value) {
                     _output = '';
                     for (String text in _chipsText) {
                       _output += text + widget.separatorCharacter;
                     }
-                    if (value!.isNotEmpty &&
-                        _formKey.currentState!.validate()) {
-                      setState(() {
-                        _chipsText.add(_controller.text);
-                        _output += _controller.text + widget.separatorCharacter;
-                      });
+                    if (value!.isNotEmpty) {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _chipsText.add(_controller.text);
+                          _output +=
+                              _controller.text + widget.separatorCharacter;
+                          _controller.clear();
+                        });
+                      }
                     }
                     widget.onSaved?.call(_output);
-                    _controller.clear();
                   },
                 ),
               ),

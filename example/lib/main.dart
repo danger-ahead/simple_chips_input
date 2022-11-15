@@ -95,9 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
           MaterialButton(
             color: Colors.blue,
             onPressed: (() {
-              if (key.currentState!.validate()) {
-                key.currentState!.save();
-              }
+              key.currentState!.save();
             }),
             child: const Text(
               'Submit',

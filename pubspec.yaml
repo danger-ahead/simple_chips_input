@@ -1,6 +1,6 @@
 name: simple_chips_input
 description: Flutter package for creating chips while typing like in Gmail app.
-version: 0.2.1
+version: 0.2.2
 homepage: https://github.com/danger-ahead/simple_chips_input
 
 environment:

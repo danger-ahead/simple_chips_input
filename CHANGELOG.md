@@ -1,3 +1,9 @@
+## 0.2.2
+
+- Fixed onChanged callback calling
+
+
+
 ## 0.2.1
 
 - Added support for TextFormField style
