@@ -21,6 +21,7 @@ class SimpleChipsInput extends StatefulWidget {
     this.textFormFieldStyle = const TextFormFieldStyle(),
     this.chipTextStyle = const TextStyle(color: Colors.white),
     this.deleteIconPadding = const EdgeInsets.only(left: 5.0),
+    this.focusNode,
     this.autoFocus = false,
     this.controller,
     this.createCharacter = ' ',
@@ -36,6 +37,7 @@ class SimpleChipsInput extends StatefulWidget {
     this.onEditingComplete,
     this.onSubmitted,
     this.onSaved,
+    this.onChipDeleted,
   });
 
   /// Character to seperate the output. For example: ' ' will seperate the output by space.
@@ -58,6 +60,9 @@ class SimpleChipsInput extends StatefulWidget {
 
   /// Decoration for the chip container.
   final BoxDecoration chipContainerDecoration;
+
+  /// FocusNode for the text field.
+  final FocusNode? focusNode;
 
   /// Controller for the textfield.
   final TextEditingController? controller;
@@ -106,6 +111,9 @@ class SimpleChipsInput extends StatefulWidget {
   final void Function(String)? onSubmitted;
   final void Function(String)? onSaved;
 
+  /// Callback when a chip is deleted. Returns the deleted chip content and index.
+  final void Function(String, int)? onChipDeleted;
+
   @override
   State<SimpleChipsInput> createState() => _SimpleChipsInputState();
 }
@@ -115,6 +123,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
   // ignore: prefer_typing_uninitialized_variables
   late final _formKey;
   final List<String> _chipsText = [];
+  late final FocusNode _focusNode;
 
   String _output = '';
 
@@ -123,6 +132,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     _formKey = widget.formKey ?? GlobalKey<FormState>();
+    _focusNode = widget.focusNode ?? FocusNode();
   }
 
   List<Widget> _buildChipsSection() {
@@ -146,9 +156,13 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                 padding: widget.deleteIconPadding,
                 child: GestureDetector(
                   onTap: () {
+                    widget.onChipDeleted?.call(_chipsText[i], i);
                     setState(() {
                       _chipsText.removeAt(i);
                     });
+                    // if (widget.onChipDeleted != null) {
+                    //   widget.onChipDeleted!(_chipsText[i], i);
+                    // }
                   },
                   child: Icon(
                     widget.deleteIcon,
@@ -178,7 +192,6 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                 ..._buildChipsSection(),
               ],
               RawKeyboardListener(
-                autofocus: widget.autoFocus,
                 focusNode: FocusNode(),
                 onKey: (event) {
                   if (event.data.logicalKey.keyLabel == widget.eraseKeyLabel) {
@@ -191,6 +204,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                 },
                 child: TextFormField(
                   autofocus: widget.autoFocus,
+                  focusNode: _focusNode,
                   controller: _controller,
                   keyboardType: widget.textFormFieldStyle.keyboardType,
                   maxLines: widget.textFormFieldStyle.maxLines,

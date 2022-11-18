@@ -1,3 +1,10 @@
+## 0.3.0
+
+- Added support for onChipDeleted callback (returns deleted chip content and index of the deleted chip).
+- Fixed a bug that prevented autoFocus from working.
+- Added support for FocusNode in the TextField.
+
+
 ## 0.2.3
 
 - Fixed long chips overflowing problem.

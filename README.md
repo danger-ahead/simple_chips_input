@@ -7,8 +7,9 @@ import 'package:simple_chips_input/simple_chips_input.dart';
 ```
 
 ## Working
-<img src="https://imgur.com/2pVOl0E.gif" width="300px" height="auto" />
-<img src="https://imgur.com/1MLeFZt.gif" width="300px" height="auto" />
+<img src="https://imgur.com/2pVOl0E.gif" width="200px" height="auto" />
+<img src="https://imgur.com/1MLeFZt.gif" width="200px" height="auto" />
+<img src="https://imgur.com/Crv5PlR.gif" width="200px" height="auto" />
 
 ## Usage
 ```dart
