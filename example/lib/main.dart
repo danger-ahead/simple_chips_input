@@ -1,6 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:simple_chips_input/simple_chips_input.dart';
+import 'package:simple_chips_input/select_chips_input.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,9 +33,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String output = '';
+  String output = '', outputSelectChipsInput = '';
   String? deletedChip, deletedChipIndex;
-  final key = GlobalKey<FormState>();
+  final keySimpleChipsInput = GlobalKey<FormState>();
   final FocusNode focusNode = FocusNode();
   final TextFormFieldStyle style = const TextFormFieldStyle(
     keyboardType: TextInputType.phone,
@@ -84,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               focusNode: focusNode,
               validateInput: true,
               autoFocus: true,
-              formKey: key,
+              formKey: keySimpleChipsInput,
               textFormFieldStyle: style,
               validateInputMethod: (String value) {
                 final phoneNumberRegExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
@@ -130,13 +132,93 @@ class _MyHomePageState extends State<MyHomePage> {
           MaterialButton(
             color: Colors.red,
             onPressed: (() {
-              key.currentState!.save();
+              keySimpleChipsInput.currentState!.save();
             }),
             child: const Text(
               'Submit',
               style: TextStyle(color: Colors.white),
             ),
-          )
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 30.0, bottom: 8.0),
+            child: Text(
+              'Example:',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+          ),
+          Text(
+            'Output:\n$outputSelectChipsInput',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 16, color: Colors.blue),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: SelectChipsInput(
+                chipsText: const ['sun', 'cloud', 'moon'],
+                separatorCharacter: ",",
+                selectedChipTextStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+                unselectedChipTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+                onTap: (p0) {
+                  setState(() {
+                    outputSelectChipsInput = p0;
+                  });
+                },
+                prefixIcons: const [
+                  null,
+                  Padding(
+                      padding: EdgeInsets.only(right: 5.0),
+                      child: Icon(
+                        Icons.cloud,
+                        size: 16.0,
+                        color: Colors.white,
+                      )),
+                  null
+                ],
+                suffixIcons: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 5.0),
+                    child: Icon(
+                      Icons.sunny,
+                      size: 16.0,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  null,
+                  Padding(
+                    padding: EdgeInsets.only(left: 5.0),
+                    child: Icon(
+                      Icons.circle,
+                      size: 16.0,
+                      color: Colors.grey,
+                    ),
+                  )
+                ],
+                widgetContainerDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                unselectedChipDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                selectedChipDecoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

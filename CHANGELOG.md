@@ -1,3 +1,8 @@
+## 0.4.0
+
+- Added select chips input. [NEW FEATURE]
+
+
 ## 0.3.0
 
 - Added support for onChipDeleted callback (returns deleted chip content and index of the deleted chip).
