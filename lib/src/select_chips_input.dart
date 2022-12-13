@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 
 /// The [SelectChipsInput] widget is a text field that allows the user to select chips and get the selected chips as output.
 class SelectChipsInput extends StatefulWidget {
+  /// Creates a [SelectChipsInput] widget.
+  /// 
+  /// Read the [API reference](https://pub.dev/documentation/simple_chips_input/latest/select_chips_input/select_chips_input-library.html) for full documentation.
   const SelectChipsInput({
     super.key,
     required this.chipsText,

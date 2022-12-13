@@ -3,6 +3,9 @@ import 'package:simple_chips_input/src/text_form_field_syle.dart';
 
 /// The [SimpleChipsInput] widget is a text field that allows the user to input and create chips out of it.
 class SimpleChipsInput extends StatefulWidget {
+  /// Creates a [SimpleChipsInput] widget.
+  ///
+  /// Read the [API reference](https://pub.dev/documentation/simple_chips_input/latest/simple_chips_input/simple_chips_input-library.html) for full documentation.
   const SimpleChipsInput({
     super.key,
     required this.separatorCharacter,
