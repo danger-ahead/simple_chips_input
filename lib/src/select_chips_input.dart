@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_init_to_null
+
 import 'package:flutter/material.dart';
 
 /// The [SelectChipsInput] widget is a text field that allows the user to select chips and get the selected chips as output.
@@ -5,10 +7,12 @@ class SelectChipsInput extends StatefulWidget {
   const SelectChipsInput({
     super.key,
     required this.chipsText,
-    // ignore: avoid_init_to_null
     this.suffixIcons = null,
-    // ignore: avoid_init_to_null
     this.prefixIcons = null,
+    this.selectedPrefixIcon = null,
+    this.selectedSuffixIcon = null,
+    this.selectedPrefixIcons = null,
+    this.selectedSuffixIcons = null,
     required this.separatorCharacter,
     this.selectedChipDecoration = const BoxDecoration(),
     this.unselectedChipDecoration = const BoxDecoration(),
@@ -57,13 +61,26 @@ class SelectChipsInput extends StatefulWidget {
   /// Chip text list.
   final List<String> chipsText;
 
-  /// Prefix icon list.
+  /// Prefix icon list, if a particular chip doesn't need to have a prefix icon, pass null in its corresponding place.
   final List<Widget?>? prefixIcons;
 
-  /// Suffix icon list.
+  /// Prefix icon list that will be shown when the chip is selected.
+  final List<Widget?>? selectedPrefixIcons;
+
+  /// Suffix icon list, if a particular chip doesn't need to have a suffix icon, pass null in its corresponding place.
   final List<Widget?>? suffixIcons;
 
-  final void Function(String)? onTap;
+  /// Suffix icon list that will be shown when the chip is selected.
+  final List<Widget?>? selectedSuffixIcons;
+
+  /// selected Suffix icon (1 icon applies to all selected chips)
+  final Widget? selectedSuffixIcon;
+
+  /// selected Prefix icon (1 icon applies to all selected chips)
+  final Widget? selectedPrefixIcon;
+
+  /// Callback when the chip is tapped, returns output and index of last chip selected.
+  final void Function(String, int)? onTap;
 
   @override
   State<SelectChipsInput> createState() => _SelectChipsInputState();
@@ -81,6 +98,20 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
     }
     if (widget.suffixIcons != null) {
       assert(widget.chipsText.length == widget.suffixIcons!.length);
+    }
+    if (widget.selectedPrefixIcons != null) {
+      assert(widget.chipsText.length == widget.selectedPrefixIcons!.length);
+      assert(widget.selectedPrefixIcon == null);
+    }
+    if (widget.selectedSuffixIcons != null) {
+      assert(widget.chipsText.length == widget.selectedSuffixIcons!.length);
+      assert(widget.selectedSuffixIcon == null);
+    }
+    if (widget.selectedPrefixIcon != null) {
+      assert(widget.selectedPrefixIcons == null);
+    }
+    if (widget.selectedSuffixIcon != null) {
+      assert(widget.selectedSuffixIcons == null);
     }
   }
 
@@ -101,7 +132,7 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
             for (int i in _selectedChipsIndex) {
               output += widget.chipsText[i] + widget.separatorCharacter;
             }
-            widget.onTap!(output);
+            widget.onTap!(output, i);
           }
         },
         child: Container(
@@ -113,7 +144,20 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (widget.prefixIcons != null && widget.prefixIcons![i] != null)
+              if (widget.selectedPrefixIcon != null &&
+                  _selectedChipsIndex.contains(i))
+                widget.selectedPrefixIcon as Widget,
+              if (_selectedChipsIndex.contains(i) &&
+                  widget.selectedPrefixIcons != null &&
+                  widget.selectedPrefixIcons![i] != null)
+                widget.selectedPrefixIcons![i] as Widget,
+              // no selected prefix icons are provided
+              if ((widget.prefixIcons != null &&
+                      widget.prefixIcons![i] != null &&
+                      !_selectedChipsIndex.contains(i)) ||
+                  (widget.prefixIcons != null &&
+                      widget.selectedPrefixIcons == null &&
+                      widget.selectedPrefixIcon == null))
                 widget.prefixIcons![i] as Widget,
               Flexible(
                 child: Text(
@@ -123,7 +167,20 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
                       : widget.unselectedChipTextStyle,
                 ),
               ),
-              if (widget.suffixIcons != null && widget.suffixIcons![i] != null)
+              if (widget.selectedSuffixIcon != null &&
+                  _selectedChipsIndex.contains(i))
+                widget.selectedSuffixIcon as Widget,
+              if (_selectedChipsIndex.contains(i) &&
+                  widget.selectedSuffixIcons != null &&
+                  widget.selectedSuffixIcons![i] != null)
+                widget.selectedSuffixIcons![i] as Widget,
+              // no selected suffix icons are provided
+              if ((widget.suffixIcons != null &&
+                      widget.suffixIcons![i] != null &&
+                      !_selectedChipsIndex.contains(i)) ||
+                  (widget.suffixIcons != null &&
+                      widget.selectedSuffixIcons == null &&
+                      widget.selectedSuffixIcon == null))
                 widget.suffixIcons![i] as Widget,
             ],
           ),

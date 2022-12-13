@@ -1,3 +1,10 @@
+## 0.5.0
+
+- Added selected icons in prefix and suffix of the chips. [select_chips_input]
+- Updated the onTap() callback to return the index of the tapped chip. [select_chips_input]
+- Updated the example app. [select_chips_input]
+
+
 ## 0.4.0
 
 - Added select chips input. [NEW FEATURE]
