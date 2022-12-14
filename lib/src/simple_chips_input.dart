@@ -23,15 +23,11 @@ class SimpleChipsInput extends StatefulWidget {
     ),
     this.textFormFieldStyle = const TextFormFieldStyle(),
     this.chipTextStyle = const TextStyle(color: Colors.white),
-    this.deleteIconPadding = const EdgeInsets.only(left: 5.0),
     this.focusNode,
     this.autoFocus = false,
     this.controller,
     this.createCharacter = ' ',
-    this.deleteChip = true,
-    this.deleteIcon = Icons.close,
-    this.deleteIconColor = Colors.white,
-    this.deleteIconSize = 14.0,
+    this.deleteIcon,
     this.validateInput = false,
     this.validateInputMethod,
     this.eraseKeyLabel = 'Backspace',
@@ -73,23 +69,11 @@ class SimpleChipsInput extends StatefulWidget {
   /// The input character used for creating a chip.
   final String createCharacter;
 
-  /// Whether the chip should contain a delete method.
-  final bool deleteChip;
-
   /// Text style for the chip.
   final TextStyle chipTextStyle;
 
   /// Icon for the delete method.
-  final IconData deleteIcon;
-
-  /// Delete icon button padding.
-  final EdgeInsets deleteIconPadding;
-
-  /// Delete icon size.
-  final double deleteIconSize;
-
-  /// Delete icon color.
-  final Color deleteIconColor;
+  final Widget? deleteIcon;
 
   /// Whether to validate input before adding to a chip.
   final bool validateInput;
@@ -154,25 +138,15 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                 style: widget.chipTextStyle,
               ),
             ),
-            if (widget.deleteChip)
-              Padding(
-                padding: widget.deleteIconPadding,
-                child: GestureDetector(
-                  onTap: () {
-                    widget.onChipDeleted?.call(_chipsText[i], i);
-                    setState(() {
-                      _chipsText.removeAt(i);
-                    });
-                    // if (widget.onChipDeleted != null) {
-                    //   widget.onChipDeleted!(_chipsText[i], i);
-                    // }
-                  },
-                  child: Icon(
-                    widget.deleteIcon,
-                    size: widget.deleteIconSize,
-                    color: widget.deleteIconColor,
-                  ),
-                ),
+            if (widget.deleteIcon != null)
+              GestureDetector(
+                onTap: () {
+                  widget.onChipDeleted?.call(_chipsText[i], i);
+                  setState(() {
+                    _chipsText.removeAt(i);
+                  });
+                },
+                child: widget.deleteIcon,
               ),
           ],
         ),

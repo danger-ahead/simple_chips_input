@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 /// The [SelectChipsInput] widget is a text field that allows the user to select chips and get the selected chips as output.
 class SelectChipsInput extends StatefulWidget {
   /// Creates a [SelectChipsInput] widget.
-  /// 
+  ///
   /// Read the [API reference](https://pub.dev/documentation/simple_chips_input/latest/select_chips_input/select_chips_input-library.html) for full documentation.
   const SelectChipsInput({
     super.key,
@@ -95,26 +95,34 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
   @override
   void initState() {
     super.initState();
-    assert(widget.chipsText.isNotEmpty);
+    assert(widget.chipsText.isNotEmpty, 'List of chips cannot be empty');
     if (widget.prefixIcons != null) {
-      assert(widget.chipsText.length == widget.prefixIcons!.length);
+      assert(widget.chipsText.length == widget.prefixIcons!.length,
+          'Length of prefix icons list must be equal to length of chips text list');
     }
     if (widget.suffixIcons != null) {
-      assert(widget.chipsText.length == widget.suffixIcons!.length);
+      assert(widget.chipsText.length == widget.suffixIcons!.length,
+          'Length of suffix icons list must be equal to length of chips text list');
     }
     if (widget.selectedPrefixIcons != null) {
-      assert(widget.chipsText.length == widget.selectedPrefixIcons!.length);
-      assert(widget.selectedPrefixIcon == null);
+      assert(widget.chipsText.length == widget.selectedPrefixIcons!.length,
+          'Length of selected prefix icons list must be equal to length of chips text list');
+      assert(widget.selectedPrefixIcon == null,
+          'Cannot use both selectedPrefixIcon and selectedPrefixIcons simultaneously');
     }
     if (widget.selectedSuffixIcons != null) {
-      assert(widget.chipsText.length == widget.selectedSuffixIcons!.length);
-      assert(widget.selectedSuffixIcon == null);
+      assert(widget.chipsText.length == widget.selectedSuffixIcons!.length,
+          'Length of selected suffix icons list must be equal to length of chips text list');
+      assert(widget.selectedSuffixIcon == null,
+          'Cannot use both selectedSuffixIcon and selectedSuffixIcons simultaneously');
     }
     if (widget.selectedPrefixIcon != null) {
-      assert(widget.selectedPrefixIcons == null);
+      assert(widget.selectedPrefixIcons == null,
+          'Cannot use both selectedPrefixIcon and selectedPrefixIcons simultaneously');
     }
     if (widget.selectedSuffixIcon != null) {
-      assert(widget.selectedSuffixIcons == null);
+      assert(widget.selectedSuffixIcons == null,
+          'Cannot use both selectedSuffixIcon and selectedSuffixIcons simultaneously');
     }
   }
 

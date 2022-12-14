@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
       home: const Home(),
     );
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _index = 1;
+    _index = 0;
     _currentBody = _body[_index];
   }
 
@@ -364,7 +364,7 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
   final FocusNode focusNode = FocusNode();
   final TextFormFieldStyle style = const TextFormFieldStyle(
     keyboardType: TextInputType.phone,
-    cursorColor: Colors.red,
+    cursorColor: Colors.blue,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.all(0.0),
       border: InputBorder.none,
@@ -389,12 +389,12 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
               ? 'Deleted chip: $deletedChip at index $deletedChipIndex'
               : '',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 16, color: Colors.red),
+          style: const TextStyle(fontSize: 16, color: Colors.blue),
         ),
         Text(
           'Output:\n$output',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 16, color: Colors.red),
+          style: const TextStyle(fontSize: 16, color: Colors.blue),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -431,15 +431,18 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
               color: Colors.black,
               fontSize: 16,
             ),
-            deleteIcon: Icons.delete,
-            deleteIconColor: Colors.black,
+            deleteIcon: const Icon(
+              Icons.delete,
+              size: 14.0,
+              color: Colors.black,
+            ),
             widgetContainerDecoration: BoxDecoration(
-              color: Colors.redAccent.withOpacity(0.2),
+              color: Colors.blue[100]!,
               borderRadius: BorderRadius.circular(16.0),
-              border: Border.all(color: Colors.red),
+              border: Border.all(color: Colors.blue[100]!),
             ),
             chipContainerDecoration: BoxDecoration(
-              color: Colors.yellow,
+              color: Colors.blue,
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(50),
             ),
@@ -447,7 +450,7 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
           ),
         ),
         MaterialButton(
-          color: Colors.red,
+          color: Colors.blue,
           onPressed: (() {
             keySimpleChipsInput.currentState!.save();
           }),

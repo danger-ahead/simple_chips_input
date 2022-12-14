@@ -1,3 +1,10 @@
+## 1.0.0
+
+- Made deleteIcon in simple_chips_input to accept any widget. [BREAKING CHANGES]
+- Removed deleteChip field in simple_chips_input. Now deleteIcon is the requirement for delete chip functionality. [BREAKING CHANGES]
+- Added reason statements in assert [select_chips_input]
+
+
 ## 0.5.0
 
 - Added selected icons in prefix and suffix of the chips. [select_chips_input]

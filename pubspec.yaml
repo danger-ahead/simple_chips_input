@@ -1,6 +1,6 @@
 name: simple_chips_input
 description: Flutter package containing 2 libraries for creating chips (as in Gmail app) and selecting chips.
-version: 0.5.0
+version: 1.0.0
 homepage: https://simplechipsinput.vercel.app
 repository: https://github.com/danger-ahead/simple_chips_input
 issue_tracker: https://github.com/danger-ahead/simple_chips_input/issues
