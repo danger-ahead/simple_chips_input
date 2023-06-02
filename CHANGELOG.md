@@ -1,3 +1,8 @@
+## 1.1.0
+
+- New feature: Ability to select only one chip at a time. [select_chips_input]
+- New feature: Ability to keep some/all/none of the chips pre-selected. [select_chips_input]
+
 ## 1.0.0
 
 - Made deleteIcon in simple_chips_input to accept any widget. [BREAKING CHANGES]

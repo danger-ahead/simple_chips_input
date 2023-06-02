@@ -16,7 +16,7 @@ class SelectChipsInput extends StatefulWidget {
     this.selectedSuffixIcon = null,
     this.selectedPrefixIcons = null,
     this.selectedSuffixIcons = null,
-    required this.separatorCharacter,
+    this.separatorCharacter,
     this.selectedChipDecoration = const BoxDecoration(),
     this.unselectedChipDecoration = const BoxDecoration(),
     this.marginBetweenChips =
@@ -31,11 +31,19 @@ class SelectChipsInput extends StatefulWidget {
     ),
     this.selectedChipTextStyle = const TextStyle(color: Colors.white),
     this.unselectedChipTextStyle = const TextStyle(color: Colors.white),
+    this.onlyOneChipSelectable = false,
     this.onTap,
+    this.wrapAlignment = WrapAlignment.start,
+    this.wrapRunAlignment = WrapAlignment.start,
+    this.wrapCrossAlignment = WrapCrossAlignment.start,
+    this.preSelectedChips,
   });
 
   /// Character to seperate the output. For example: ' ' will seperate the output by space.
-  final String separatorCharacter;
+  final String? separatorCharacter;
+
+  /// Pre selected chips index List.
+  final List<int>? preSelectedChips;
 
   /// Decoration for the selected chip container.
   final BoxDecoration selectedChipDecoration;
@@ -82,6 +90,18 @@ class SelectChipsInput extends StatefulWidget {
   /// selected Prefix icon (1 icon applies to all selected chips)
   final Widget? selectedPrefixIcon;
 
+  /// If true, only one chip can be selected at a time.
+  final bool? onlyOneChipSelectable;
+
+  /// Wrap alignment for the chips.
+  final WrapAlignment? wrapAlignment;
+
+  /// Wrap run alignment for the chips.
+  final WrapAlignment? wrapRunAlignment;
+
+  /// Wrap run alignment for the chips in the cross axis.
+  final WrapCrossAlignment? wrapCrossAlignment;
+
   /// Callback when the chip is tapped, returns output and index of last chip selected.
   final void Function(String, int)? onTap;
 
@@ -124,6 +144,24 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
       assert(widget.selectedSuffixIcons == null,
           'Cannot use both selectedSuffixIcon and selectedSuffixIcons simultaneously');
     }
+    if (!widget.onlyOneChipSelectable!) {
+      assert(widget.separatorCharacter != null,
+          'Separator character cannot be null when onlyOneChipSelectable is false');
+    } else {
+      assert(widget.separatorCharacter == null,
+          'Separator character must be null when onlyOneChipSelectable is true');
+      if (widget.preSelectedChips != null) {
+        assert(widget.preSelectedChips!.length == 1,
+            'Only one chip can be pre selected when onlyOneChipSelectable is true');
+        assert(widget.chipsText.length >= widget.preSelectedChips!.length,
+            'Length of pre selected chips list cannot be greater than length of chips text list');
+      }
+    }
+
+    // add pre selected chips to the selected chips list
+    if (widget.preSelectedChips != null) {
+      _selectedChipsIndex.addAll(widget.preSelectedChips!);
+    }
   }
 
   List<Widget> _buildChipsSection() {
@@ -131,19 +169,35 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
     for (int i = 0; i < widget.chipsText.length; i++) {
       chips.add(GestureDetector(
         onTap: () {
-          setState(() {
-            if (_selectedChipsIndex.contains(i)) {
-              _selectedChipsIndex.remove(i);
-            } else {
+          // multiple chips can be selected at a time
+          if (!widget.onlyOneChipSelectable!) {
+            setState(() {
+              if (_selectedChipsIndex.contains(i)) {
+                _selectedChipsIndex.remove(i);
+              } else {
+                _selectedChipsIndex.add(i);
+              }
+            });
+            if (widget.onTap != null) {
+              String output = '';
+              for (int i in _selectedChipsIndex) {
+                output += widget.chipsText[i] +
+                    (widget.separatorCharacter == null
+                        ? ','
+                        : widget.separatorCharacter!);
+              }
+              widget.onTap!(output, i);
+            }
+          }
+          // only one chip can be selected at a time
+          else {
+            setState(() {
+              _selectedChipsIndex.clear();
               _selectedChipsIndex.add(i);
+            });
+            if (widget.onTap != null) {
+              widget.onTap!(widget.chipsText[i], i);
             }
-          });
-          if (widget.onTap != null) {
-            String output = '';
-            for (int i in _selectedChipsIndex) {
-              output += widget.chipsText[i] + widget.separatorCharacter;
-            }
-            widget.onTap!(output, i);
           }
         },
         child: Container(
@@ -208,6 +262,9 @@ class _SelectChipsInputState extends State<SelectChipsInput> {
       decoration: widget.widgetContainerDecoration,
       child: SingleChildScrollView(
         child: Wrap(
+          alignment: widget.wrapAlignment!,
+          runAlignment: widget.wrapRunAlignment!,
+          crossAxisAlignment: widget.wrapCrossAlignment!,
           children: [
             ..._buildChipsSection(),
           ],

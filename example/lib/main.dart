@@ -222,62 +222,6 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SelectChipsInput(
-              chipsText: const ['door', 'window'],
-              separatorCharacter: ".",
-              selectedChipTextStyle: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-              unselectedChipTextStyle: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-              onTap: (p0, p1) {
-                setState(() {
-                  outputSelectChipsInput = p0;
-                });
-              },
-              prefixIcons: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 5.0),
-                  child: Icon(
-                    Icons.door_back_door_outlined,
-                    size: 16.0,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(right: 5.0),
-                    child: Icon(
-                      Icons.window,
-                      size: 16.0,
-                      color: Colors.white,
-                    )),
-              ],
-              selectedSuffixIcon: const Padding(
-                padding: EdgeInsets.only(left: 5.0),
-                child: Icon(
-                  Icons.check_box,
-                  size: 16.0,
-                ),
-              ),
-              widgetContainerDecoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                color: Colors.orange[100]!.withOpacity(0.5),
-              ),
-              unselectedChipDecoration: BoxDecoration(
-                color: Colors.orange[400],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              selectedChipDecoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SelectChipsInput(
               chipsText: const ['up', 'down'],
               separatorCharacter: ":",
               selectedChipTextStyle: const TextStyle(
@@ -344,6 +288,84 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8.0, bottom: 4.0),
+            child: Text('Preselected chip feature:'),
+          ),
+          SelectChipsInput(
+            chipsText: const ['door', 'window'],
+            preSelectedChips: const [1],
+            separatorCharacter: ".",
+            selectedChipTextStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+            unselectedChipTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+            onTap: (p0, p1) {
+              setState(() {
+                outputSelectChipsInput = p0;
+              });
+            },
+            prefixIcons: const [
+              Padding(
+                padding: EdgeInsets.only(right: 5.0),
+                child: Icon(
+                  Icons.door_back_door_outlined,
+                  size: 16.0,
+                  color: Colors.white,
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.only(right: 5.0),
+                  child: Icon(
+                    Icons.window,
+                    size: 16.0,
+                    color: Colors.white,
+                  )),
+            ],
+            selectedSuffixIcon: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Icon(
+                Icons.check_box,
+                size: 16.0,
+              ),
+            ),
+            widgetContainerDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.orange[100]!.withOpacity(0.5),
+            ),
+            unselectedChipDecoration: BoxDecoration(
+              color: Colors.orange[400],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            selectedChipDecoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8.0, bottom: 4.0),
+            child: Text('One chip selectable widget:'),
+          ),
+          SelectChipsInput(
+              chipsText: const ['System', 'Light', 'Dark'],
+              onlyOneChipSelectable: true,
+              selectedChipDecoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              selectedChipTextStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+              onTap: (output, index) {
+                setState(() {
+                  outputSelectChipsInput = output;
+                });
+              }),
         ],
       ),
     );
@@ -402,7 +424,6 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
             separatorCharacter: ",",
             focusNode: focusNode,
             validateInput: true,
-            // autoFocus: true,
             formKey: keySimpleChipsInput,
             textFormFieldStyle: style,
             validateInputMethod: (String value) {
