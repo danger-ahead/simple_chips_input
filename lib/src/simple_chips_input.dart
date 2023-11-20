@@ -106,10 +106,10 @@ class SimpleChipsInput extends StatefulWidget {
   final void Function(String)? onChipAdded;
 
   @override
-  State<SimpleChipsInput> createState() => _SimpleChipsInputState();
+  State<SimpleChipsInput> createState() => SimpleChipsInputState();
 }
 
-class _SimpleChipsInputState extends State<SimpleChipsInput> {
+class SimpleChipsInputState extends State<SimpleChipsInput> {
   late final TextEditingController _controller;
   // ignore: prefer_typing_uninitialized_variables
   late final _formKey;
@@ -273,5 +273,12 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
         ),
       ),
     );
+  }
+
+  void clearChips() {
+    setState(() {
+      _chipsText.clear();
+      _controller.clear();
+    });
   }
 }
