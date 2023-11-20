@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chips_input/src/text_form_field_syle.dart';
+import 'package:flutter/services.dart';
 
 /// The [SimpleChipsInput] widget is a text field that allows the user to input and create chips out of it.
 class SimpleChipsInput extends StatefulWidget {
@@ -171,6 +172,9 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
               RawKeyboardListener(
                 focusNode: FocusNode(),
                 onKey: (event) {
+                  if(event is RawKeyUpEvent) {
+                    return;
+                  }
                   if (event.data.logicalKey.keyLabel == widget.eraseKeyLabel) {
                     if (_controller.text.isEmpty && _chipsText.isNotEmpty) {
                       setState(() {
