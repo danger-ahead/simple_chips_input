@@ -38,6 +38,7 @@ class SimpleChipsInput extends StatefulWidget {
     this.onSubmitted,
     this.onSaved,
     this.onChipDeleted,
+    this.onChipAdded,
   });
 
   /// Character to seperate the output. For example: ' ' will seperate the output by space.
@@ -101,6 +102,8 @@ class SimpleChipsInput extends StatefulWidget {
 
   /// Callback when a chip is deleted. Returns the deleted chip content and index.
   final void Function(String, int)? onChipDeleted;
+
+  final void Function(String)? onChipAdded;
 
   @override
   State<SimpleChipsInput> createState() => _SimpleChipsInputState();
@@ -178,6 +181,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                   if (event.data.logicalKey.keyLabel == widget.eraseKeyLabel) {
                     if (_controller.text.isEmpty && _chipsText.isNotEmpty) {
                       setState(() {
+                        widget.onChipDeleted?.call(_chipsText.last, _chipsText.length - 1);
                         _chipsText.removeLast();
                       });
                     }
@@ -207,6 +211,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
                           _chipsText.add(_controller.text);
+                          widget.onChipAdded?.call(_controller.text);
                           _controller.clear();
                         });
                       }
