@@ -104,7 +104,10 @@ class SimpleChipsInput extends StatefulWidget {
   /// Callback when a chip is deleted. Returns the deleted chip content and index.
   final void Function(String, int)? onChipDeleted;
 
+  /// Callback when a chip is added. Returns the added chip content.
   final void Function(String)? onChipAdded;
+
+  /// Callback when all chips are cleared.
   final void Function()? onChipsCleared;
 
   @override
