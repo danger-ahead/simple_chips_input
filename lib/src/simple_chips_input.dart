@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chips_input/src/text_form_field_syle.dart';
+import 'package:flutter/services.dart';
 
 /// The [SimpleChipsInput] widget is a text field that allows the user to input and create chips out of it.
 class SimpleChipsInput extends StatefulWidget {
@@ -37,6 +38,8 @@ class SimpleChipsInput extends StatefulWidget {
     this.onSubmitted,
     this.onSaved,
     this.onChipDeleted,
+    this.onChipAdded,
+    this.onChipsCleared,
   });
 
   /// Character to seperate the output. For example: ' ' will seperate the output by space.
@@ -101,11 +104,17 @@ class SimpleChipsInput extends StatefulWidget {
   /// Callback when a chip is deleted. Returns the deleted chip content and index.
   final void Function(String, int)? onChipDeleted;
 
+  /// Callback when a chip is added. Returns the added chip content.
+  final void Function(String)? onChipAdded;
+
+  /// Callback when all chips are cleared.
+  final void Function()? onChipsCleared;
+
   @override
-  State<SimpleChipsInput> createState() => _SimpleChipsInputState();
+  State<SimpleChipsInput> createState() => SimpleChipsInputState();
 }
 
-class _SimpleChipsInputState extends State<SimpleChipsInput> {
+class SimpleChipsInputState extends State<SimpleChipsInput> {
   late final TextEditingController _controller;
   // ignore: prefer_typing_uninitialized_variables
   late final _formKey;
@@ -171,9 +180,13 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
               RawKeyboardListener(
                 focusNode: FocusNode(),
                 onKey: (event) {
+                  if(event is RawKeyUpEvent) {
+                    return;
+                  }
                   if (event.data.logicalKey.keyLabel == widget.eraseKeyLabel) {
                     if (_controller.text.isEmpty && _chipsText.isNotEmpty) {
                       setState(() {
+                        widget.onChipDeleted?.call(_chipsText.last, _chipsText.length - 1);
                         _chipsText.removeLast();
                       });
                     }
@@ -203,6 +216,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
                           _chipsText.add(_controller.text);
+                          widget.onChipAdded?.call(_controller.text);
                           _controller.clear();
                         });
                       }
@@ -229,6 +243,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
                           _chipsText.add(_controller.text);
+                          widget.onChipAdded?.call(_controller.text);
                           _output +=
                               _controller.text + widget.separatorCharacter;
                           _controller.clear();
@@ -246,6 +261,7 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
                           _chipsText.add(_controller.text);
+                          widget.onChipAdded?.call(_controller.text);
                           _output +=
                               _controller.text + widget.separatorCharacter;
                           _controller.clear();
@@ -264,5 +280,13 @@ class _SimpleChipsInputState extends State<SimpleChipsInput> {
         ),
       ),
     );
+  }
+
+  void clearChips() {
+    setState(() {
+      _chipsText.clear();
+      _controller.clear();
+      widget.onChipsCleared?.call();
+    });
   }
 }
