@@ -1,3 +1,7 @@
+## 1.2.1
+
+- fix: removed deprecated `RawKeyboardListener` and `RawKeyEvent`
+
 ## 1.2.0
 
 - fix: ignore RawKeyDownEvent for remove button press

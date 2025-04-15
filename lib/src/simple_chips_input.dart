@@ -177,16 +177,17 @@ class SimpleChipsInputState extends State<SimpleChipsInput> {
               if (widget.placeChipsSectionAbove) ...[
                 ..._buildChipsSection(),
               ],
-              RawKeyboardListener(
+              KeyboardListener(
                 focusNode: FocusNode(),
-                onKey: (event) {
-                  if(event is RawKeyUpEvent) {
+                onKeyEvent: (event) {
+                  if (event is KeyUpEvent) {
                     return;
                   }
-                  if (event.data.logicalKey.keyLabel == widget.eraseKeyLabel) {
+                  if (event.logicalKey.keyLabel == widget.eraseKeyLabel) {
                     if (_controller.text.isEmpty && _chipsText.isNotEmpty) {
                       setState(() {
-                        widget.onChipDeleted?.call(_chipsText.last, _chipsText.length - 1);
+                        widget.onChipDeleted
+                            ?.call(_chipsText.last, _chipsText.length - 1);
                         _chipsText.removeLast();
                       });
                     }
