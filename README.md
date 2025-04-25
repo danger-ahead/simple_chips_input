@@ -30,5 +30,23 @@ import 'package:simple_chips_input/select_chips_input.dart';
 
 ### For example usage, refer [pub.dev example](https://pub.dev/packages/simple_chips_input/example)
 
+## Issues :bug:
+
+If something doesn’t work, please [file an issue](https://github.com/rubemfsv/clean-react-app/issues/new).
+
+## Branches and contributions :bookmark_tabs: 
+
+As this project is intended to be open source and free for everyone to use, feel free to contribute improvements.
+
+If something can be improved, just create a branch from `main` and make a Pull Request with the suggestions.
+
+## Contributors 💻
+
+Meet the talented individuals who have contributed to simple_chips_input project:  
+
+<a href="https://github.com/danger-ahead/simple_chips_input/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=danger-ahead/simple_chips_input" />
+</a>
+
 ### Author
 [@danger-ahead](https://github.com/danger-ahead/)
