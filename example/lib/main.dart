@@ -150,7 +150,7 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
               ),
               widgetContainerDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: Colors.green[100]!.withOpacity(0.5),
+                color: Colors.green[100]!,
               ),
               unselectedChipDecoration: BoxDecoration(
                 color: Colors.green[400],
@@ -207,7 +207,7 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
               ],
               widgetContainerDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: Colors.blue[100]!.withOpacity(0.5),
+                color: Colors.blue[100]!,
               ),
               unselectedChipDecoration: BoxDecoration(
                 color: Colors.blue,
@@ -276,7 +276,7 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
               ],
               widgetContainerDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: Colors.amber[100]!.withOpacity(0.5),
+                color: Colors.amber[100]!,
               ),
               unselectedChipDecoration: BoxDecoration(
                 color: Colors.amber[400],
@@ -335,7 +335,7 @@ class _SelectChipsInputWidgetState extends State<SelectChipsInputWidget> {
             ),
             widgetContainerDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
-              color: Colors.orange[100]!.withOpacity(0.5),
+              color: Colors.orange[100]!,
             ),
             unselectedChipDecoration: BoxDecoration(
               color: Colors.orange[400],
@@ -382,10 +382,11 @@ class SimpleChipsInputWidget extends StatefulWidget {
 class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
   String output = '';
   String? deletedChip, deletedChipIndex;
-  final keySimpleChipsInput = GlobalKey<FormState>();
+  final keySimpleChipsInputForm = GlobalKey<FormState>();
+  final keySimpleChipsInput = GlobalKey<SimpleChipsInputState>();
   final FocusNode focusNode = FocusNode();
   final TextFormFieldStyle style = const TextFormFieldStyle(
-    keyboardType: TextInputType.phone,
+    keyboardType: TextInputType.text,
     cursorColor: Colors.blue,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.all(0.0),
@@ -421,11 +422,13 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SimpleChipsInput(
+            key: keySimpleChipsInput,
             separatorCharacter: ",",
             focusNode: focusNode,
             validateInput: true,
-            formKey: keySimpleChipsInput,
+            formKey: keySimpleChipsInputForm,
             textFormFieldStyle: style,
+            marginBetweenChips: const EdgeInsets.all(10),
             validateInputMethod: (String value) {
               final phoneNumberRegExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
               if (!phoneNumberRegExp.hasMatch(value)) {
@@ -473,10 +476,20 @@ class _SimpleChipsInputWidgetState extends State<SimpleChipsInputWidget> {
         MaterialButton(
           color: Colors.blue,
           onPressed: (() {
-            keySimpleChipsInput.currentState!.save();
+            keySimpleChipsInputForm.currentState!.save();
           }),
           child: const Text(
             'Submit',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        MaterialButton(
+          color: Colors.red,
+          onPressed: (() {
+            keySimpleChipsInput.currentState!.clearChips();
+          }),
+          child: const Text(
+            'Clear',
             style: TextStyle(color: Colors.white),
           ),
         ),

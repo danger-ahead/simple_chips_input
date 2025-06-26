@@ -1,3 +1,8 @@
+## 1.2.2
+
+- update: marginBetweenChips parameter in [simple_chips_input] now internally using spacing
+- update: example app
+
 ## 1.2.1
 
 - fix: removed deprecated `RawKeyboardListener` and `RawKeyEvent`

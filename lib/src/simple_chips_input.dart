@@ -20,7 +20,6 @@ class SimpleChipsInput extends StatefulWidget {
     this.chipContainerDecoration = const BoxDecoration(
       shape: BoxShape.rectangle,
       color: Colors.blue,
-      borderRadius: BorderRadius.all(Radius.circular(50.0)),
     ),
     this.textFormFieldStyle = const TextFormFieldStyle(),
     this.chipTextStyle = const TextStyle(color: Colors.white),
@@ -136,7 +135,6 @@ class SimpleChipsInputState extends State<SimpleChipsInput> {
     for (int i = 0; i < _chipsText.length; i++) {
       chips.add(Container(
         padding: widget.paddingInsideChipContainer,
-        margin: widget.marginBetweenChips,
         decoration: widget.chipContainerDecoration,
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -173,6 +171,8 @@ class SimpleChipsInputState extends State<SimpleChipsInput> {
         decoration: widget.widgetContainerDecoration,
         child: SingleChildScrollView(
           child: Wrap(
+            spacing: widget.marginBetweenChips.horizontal,
+            runSpacing: widget.marginBetweenChips.vertical,
             children: [
               if (widget.placeChipsSectionAbove) ...[
                 ..._buildChipsSection(),
@@ -283,6 +283,15 @@ class SimpleChipsInputState extends State<SimpleChipsInput> {
     );
   }
 
+  /// Use a key to call this function outside of the widget.
+  ///
+  /// Example:
+  ///
+  /// final key = GlobalKey<SimpleChipsInputState>();
+  ///
+  /// SimpleChipsInput(key: key, ...);
+  ///
+  /// key.currentState?.clearChips();
   void clearChips() {
     setState(() {
       _chipsText.clear();

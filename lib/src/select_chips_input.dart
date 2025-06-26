@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_init_to_null
-
 import 'package:flutter/material.dart';
 
 /// The [SelectChipsInput] widget is a text field that allows the user to select chips and get the selected chips as output.
@@ -10,12 +8,12 @@ class SelectChipsInput extends StatefulWidget {
   const SelectChipsInput({
     super.key,
     required this.chipsText,
-    this.suffixIcons = null,
-    this.prefixIcons = null,
-    this.selectedPrefixIcon = null,
-    this.selectedSuffixIcon = null,
-    this.selectedPrefixIcons = null,
-    this.selectedSuffixIcons = null,
+    this.suffixIcons,
+    this.prefixIcons,
+    this.selectedPrefixIcon,
+    this.selectedSuffixIcon,
+    this.selectedPrefixIcons,
+    this.selectedSuffixIcons,
     this.separatorCharacter,
     this.selectedChipDecoration = const BoxDecoration(),
     this.unselectedChipDecoration = const BoxDecoration(),
